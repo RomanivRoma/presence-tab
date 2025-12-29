@@ -83,20 +83,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
     }));
   });
 
-  onlineCount = computed(() => {
-    const timestamp = this.now();
-    return this.rawTabs().filter(
-      (t) => this.calculateStatus(t, timestamp) !== TabStatus.Stale
-    ).length;
-  });
-
-  activeCount = computed(() => {
-    const timestamp = this.now();
-    return this.rawTabs().filter(
-      (t) => this.calculateStatus(t, timestamp) === TabStatus.Active
-    ).length;
-  });
-
   ngOnInit() {
     this.fetchData().catch((err) =>
       console.error("Initial data load failed:", err)
