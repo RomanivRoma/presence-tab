@@ -1,0 +1,66 @@
+<div class="text-center mb-4">
+  <h1 class="h3 mb-3">Tech test</h1>
+  <p class="text-muted">Sign in or create a new account</p>
+</div>
+
+<form
+  class="form-signin"
+  #authForm="ngForm"
+  (ngSubmit)="authForm.form.valid && login()"
+>
+  <div class="form-label-group mb-3">
+    <input
+      type="text"
+      id="userName"
+      name="username"
+      [(ngModel)]="username"
+      #usernameModel="ngModel"
+      class="form-control"
+      [class.is-invalid]="authForm.submitted && usernameModel.invalid"
+      placeholder="Email Address"
+      required
+      autofocus
+    />
+    <label for="userName">Email Address</label>
+    <div class="invalid-feedback">Email address is required.</div>
+  </div>
+
+  <div class="form-label-group mb-3">
+    <input
+      type="password"
+      id="inputPassword"
+      name="password"
+      [(ngModel)]="password"
+      #passwordModel="ngModel"
+      class="form-control"
+      [class.is-invalid]="authForm.submitted && passwordModel.invalid"
+      placeholder="Password"
+      required
+    />
+    <label for="inputPassword">Password</label>
+    <div class="invalid-feedback">Password is required.</div>
+  </div>
+
+  <div class="mb-3 text-danger small" *ngIf="errorMessage()">
+    {{ errorMessage() }}
+  </div>
+
+  <div class="mb-3 text-success small" *ngIf="successMessage()">
+    {{ successMessage() }}
+  </div>
+
+  <div class="d-grid gap-2">
+    <button type="submit" class="btn btn-lg btn-primary" [disabled]="busy()">
+      Sign in
+    </button>
+
+    <button
+      type="button"
+      class="btn btn-lg btn-outline-secondary"
+      [disabled]="busy()"
+      (click)="authForm.onSubmit($event); authForm.form.valid && signup()"
+    >
+      Create Account
+    </button>
+  </div>
+</form>

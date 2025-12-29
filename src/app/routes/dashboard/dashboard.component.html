@@ -1,0 +1,65 @@
+<div class="container py-4">
+  <div class="card mb-4 shadow-sm" *ngFor="let group of groupedTabs()">
+    <div
+      class="card-header d-flex align-items-center justify-content-between bg-light"
+    >
+      <div class="d-flex align-items-center">
+        <i class="bi bi-phone me-2"></i>
+        <h6 class="mb-0 text-truncate" title="{{ group.deviceId }}">
+          Device: {{ group.deviceId }}
+        </h6>
+      </div>
+
+      <span
+        *ngIf="group.deviceId === presence.deviceId"
+        class="badge bg-primary"
+      >
+        Current Device
+      </span>
+    </div>
+
+    <ul class="list-group list-group-flush">
+      <li
+        class="list-group-item d-flex align-items-center justify-content-between"
+        *ngFor="let tab of group.tabs"
+      >
+        <div class="d-flex align-items-center">
+          <div
+            [style.background-color]="getStatusColor(tab.status)"
+            class="rounded-circle me-3 flex-shrink-0"
+            style="width: 12px; height: 12px"
+            title="{{ tab.status }}"
+          ></div>
+
+          <div>
+            <div class="d-flex align-items-center flex-wrap">
+              <strong class="me-2">{{ tab.status }}</strong>
+              <span
+                class="text-muted small text-truncate"
+                style="max-width: 250px"
+                title="{{ tab.user_agent }}"
+              >
+                - {{ tab.user_agent }}
+              </span>
+
+              <span
+                *ngIf="tab.tab_id === presence.tabId"
+                class="badge bg-success ms-2"
+              >
+                THIS TAB
+              </span>
+            </div>
+
+            <div class="text-muted" style="font-size: 0.85rem">
+              Last seen: {{ tab.last_seen | date : "mediumTime" }}
+            </div>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <div *ngIf="groupedTabs().length === 0" class="text-center text-muted py-5">
+    Loading active sessions...
+  </div>
+</div>
